@@ -1,4 +1,4 @@
-const name = "Jaber";
+const name = "Jaber - Yomi";
 const version = "1.0.0";
 const type = "anime";
 const lang = "en";
@@ -23,7 +23,7 @@ async function search(query) {
       subOrDub: item.subOrDub || "Sub/Dub"
     }));
   } catch (error) {
-    console.error("Jaber (Yomi) Search Error:", error);
+    console.error("Jaber - Yomi Search Error:", error);
     return [];
   }
 }
@@ -48,7 +48,7 @@ async function getDetail(id) {
       }))
     };
   } catch (error) {
-    console.error("Jaber (Yomi) Detail Error:", error);
+    console.error("Jaber - Yomi Detail Error:", error);
     return { episodes: [] };
   }
 }
@@ -69,7 +69,7 @@ async function getStreams(episodeId) {
       }
     }));
   } catch (error) {
-    console.error("Jaber (Yomi) Stream Error:", error);
+    console.error("Jaber - Yomi Stream Error:", error);
     return [];
   }
-              }
+          }
