@@ -1,0 +1,33 @@
+{
+  "name": "Multi-Source Anime Repository",
+  "description": "Custom Zangetsu providers for HindiAnime, AnimaHD, and Yomi",
+  "sources": [
+    {
+      "id": "hindianime",
+      "name": "HindiAnime",
+      "version": "1.0.0",
+      "type": "anime",
+      "lang": "hi",
+      "file": "providers/hindianime.js",
+      "nsfw": false
+    },
+    {
+      "id": "animahd",
+      "name": "AnimaHD",
+      "version": "1.0.0",
+      "type": "anime",
+      "lang": "hi",
+      "file": "providers/animahd.js",
+      "nsfw": false
+    },
+    {
+      "id": "yomi",
+      "name": "Yomi",
+      "version": "1.0.0",
+      "type": "anime",
+      "lang": "en",
+      "file": "providers/yomi.js",
+      "nsfw": false
+    }
+  ]
+}
