@@ -1,10 +1,10 @@
 {
   "name": "Jaber",
-  "description": "Custom Zangetsu providers for HindiAnime, AnimaHD, and Yomi",
+  "description": "Custom Zangetsu source repository by Jaber",
   "sources": [
     {
-      "id": "hindianime",
-      "name": "HindiAnime",
+      "id": "jaber-hindianime",
+      "name": "Jaber",
       "version": "1.0.0",
       "type": "anime",
       "lang": "hi",
@@ -12,8 +12,8 @@
       "nsfw": false
     },
     {
-      "id": "animahd",
-      "name": "AnimaHD",
+      "id": "jaber-animahd",
+      "name": "Jaber",
       "version": "1.0.0",
       "type": "anime",
       "lang": "hi",
@@ -21,12 +21,21 @@
       "nsfw": false
     },
     {
-      "id": "yomi",
-      "name": "Yomi",
+      "id": "jaber-yomi",
+      "name": "Jaber",
       "version": "1.0.0",
       "type": "anime",
       "lang": "en",
       "file": "providers/yomi.js",
+      "nsfw": false
+    },
+    {
+      "id": "jaber-topfilm",
+      "name": "Jaber",
+      "version": "1.0.0",
+      "type": "movie",
+      "lang": "en",
+      "file": "providers/topfilm.js",
       "nsfw": false
     }
   ]
