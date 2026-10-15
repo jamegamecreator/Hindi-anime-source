@@ -1,4 +1,4 @@
-const name = "Jaber";
+const name = "Jaber - TopFilm";
 const version = "1.0.0";
 const type = "movie";
 const lang = "en";
@@ -23,7 +23,7 @@ async function search(query) {
       subOrDub: item.quality || "HD"
     }));
   } catch (error) {
-    console.error("Jaber (TopFilm) Search Error:", error);
+    console.error("Jaber - TopFilm Search Error:", error);
     return [];
   }
 }
@@ -47,7 +47,7 @@ async function getDetail(id) {
       }))
     };
   } catch (error) {
-    console.error("Jaber (TopFilm) Detail Error:", error);
+    console.error("Jaber - TopFilm Detail Error:", error);
     return { episodes: [] };
   }
 }
@@ -68,7 +68,7 @@ async function getStreams(episodeId) {
       }
     }));
   } catch (error) {
-    console.error("Jaber (TopFilm) Stream Error:", error);
+    console.error("Jaber - TopFilm Stream Error:", error);
     return [];
   }
 }
