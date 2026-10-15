@@ -1,4 +1,4 @@
-const name = "Jaber";
+const name = "Jaber - AnimaHD";
 const version = "1.0.0";
 const type = "anime";
 const lang = "hi";
@@ -23,7 +23,7 @@ async function search(query) {
       subOrDub: "Multi/Dub"
     }));
   } catch (error) {
-    console.error("Jaber (AnimaHD) Search Error:", error);
+    console.error("Jaber - AnimaHD Search Error:", error);
     return [];
   }
 }
@@ -48,7 +48,7 @@ async function getDetail(id) {
       }))
     };
   } catch (error) {
-    console.error("Jaber (AnimaHD) Detail Error:", error);
+    console.error("Jaber - AnimaHD Detail Error:", error);
     return { episodes: [] };
   }
 }
@@ -69,7 +69,7 @@ async function getStreams(episodeId) {
       }
     }));
   } catch (error) {
-    console.error("Jaber (AnimaHD) Stream Error:", error);
+    console.error("Jaber - AnimaHD Stream Error:", error);
     return [];
   }
 }
