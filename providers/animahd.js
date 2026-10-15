@@ -1,75 +1,105 @@
 const name = "Jaber - AnimaHD";
-const version = "1.0.0";
+const version = "1.0.2";
 const type = "anime";
 const lang = "hi";
 const baseUrl = "https://animahd.com";
 
 const headers = {
   "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-  "Referer": `${baseUrl}/`,
-  "Accept": "application/json, text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"
+  "Referer": `${baseUrl}/`
 };
+
+async function getMainPage() {
+  try {
+    const response = await fetch(`${baseUrl}/`, { headers });
+    const html = await response.text();
+    const results = [];
+
+    const matches = [...html.matchAll(/<a href="https:\/\/animahd\.com\/([^\/"]+)\/".*?title="([^"]+)".*?src="([^"]+)"/g)];
+    for (const match of matches) {
+      results.push({
+        id: match[1],
+        title: match[2],
+        image: match[3],
+        subOrDub: "Multi/Dub"
+      });
+    }
+
+    return [{ title: "Latest Anime", list: results }];
+  } catch (error) {
+    return [];
+  }
+}
 
 async function search(query) {
   try {
-    const response = await fetch(`${baseUrl}/api/search?q=${encodeURIComponent(query)}`, { headers });
-    const data = await response.json();
-    const results = Array.isArray(data) ? data : (data.results || data.data || []);
+    const response = await fetch(`${baseUrl}/?s=${encodeURIComponent(query)}`, { headers });
+    const html = await response.text();
+    const results = [];
 
-    return results.map(item => ({
-      id: item.id || item.slug,
-      title: item.title || item.name,
-      image: item.poster || item.image,
-      subOrDub: "Multi/Dub"
-    }));
+    const matches = [...html.matchAll(/<a href="https:\/\/animahd\.com\/([^\/"]+)\/".*?title="([^"]+)".*?src="([^"]+)"/g)];
+    for (const match of matches) {
+      results.push({
+        id: match[1],
+        title: match[2],
+        image: match[3],
+        subOrDub: "Multi/Dub"
+      });
+    }
+
+    return results;
   } catch (error) {
-    console.error("Jaber - AnimaHD Search Error:", error);
     return [];
   }
 }
 
 async function getDetail(id) {
   try {
-    const response = await fetch(`${baseUrl}/api/anime/${id}`, { headers });
-    const data = await response.json();
+    const response = await fetch(`${baseUrl}/${id}/`, { headers });
+    const html = await response.text();
+
+    const titleMatch = html.match(/<h1[^>]*>([^<]+)<\/h1>/);
+    const imgMatch = html.match(/<meta property="og:image" content="([^"]+)"/);
+
+    const episodes = [];
+    const epMatches = [...html.matchAll(/href="([^"]+)"[^>]*class="episode-[^"]*">([^<]+)<\/a>/g)];
+    
+    epMatches.forEach((m, idx) => {
+      episodes.push({
+        id: m[1],
+        number: idx + 1,
+        title: m[2].trim() || `Episode ${idx + 1}`
+      });
+    });
 
     return {
-      id: data.id || id,
-      title: data.title,
-      description: data.description || data.synopsis,
-      image: data.poster || data.image,
-      status: data.status || "Completed",
-      malId: data.mal_id || null,
-      tmdbId: data.tmdb_id || null,
-      episodes: (data.episodes || []).map((ep, index) => ({
-        id: ep.id || `${id}/${index + 1}`,
-        number: ep.number || index + 1,
-        title: ep.title || `Episode ${index + 1}`
-      }))
+      id: id,
+      title: titleMatch ? titleMatch[1].trim() : id,
+      image: imgMatch ? imgMatch[1] : "",
+      episodes: episodes
     };
   } catch (error) {
-    console.error("Jaber - AnimaHD Detail Error:", error);
     return { episodes: [] };
   }
 }
 
-async function getStreams(episodeId) {
+async function getStreams(episodeUrl) {
   try {
-    const response = await fetch(`${baseUrl}/api/watch/${episodeId}`, { headers });
-    const data = await response.json();
-    const streams = data.sources || data.streams || [];
+    const response = await fetch(episodeUrl, { headers });
+    const html = await response.text();
 
-    return streams.map(stream => ({
-      url: stream.url || stream.file,
-      quality: stream.quality || "1080p",
-      isHls: (stream.url || stream.file || "").includes(".m3u8"),
-      headers: {
-        "User-Agent": "Mozilla/5.0",
-        "Referer": baseUrl
+    const iframeMatch = html.match(/<iframe[^>]+src="([^"]+)"/);
+    if (!iframeMatch) return [];
+
+    return [
+      {
+        url: iframeMatch[1],
+        quality: "1080p",
+        isHls: iframeMatch[1].includes(".m3u8"),
+        headers: { "User-Agent": "Mozilla/5.0", "Referer": baseUrl }
       }
-    }));
+    ];
   } catch (error) {
-    console.error("Jaber - AnimaHD Stream Error:", error);
     return [];
   }
-}
+  }
