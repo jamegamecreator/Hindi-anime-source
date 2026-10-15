@@ -1,4 +1,4 @@
-const name = "AnimaHD";
+const name = "Jaber";
 const version = "1.0.0";
 const type = "anime";
 const lang = "hi";
@@ -10,7 +10,6 @@ const headers = {
   "Accept": "application/json, text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"
 };
 
-// Search AnimaHD catalog
 async function search(query) {
   try {
     const response = await fetch(`${baseUrl}/api/search?q=${encodeURIComponent(query)}`, { headers });
@@ -24,12 +23,11 @@ async function search(query) {
       subOrDub: "Multi/Dub"
     }));
   } catch (error) {
-    console.error("AnimaHD Search Error:", error);
+    console.error("Jaber (AnimaHD) Search Error:", error);
     return [];
   }
 }
 
-// Fetch anime detail metadata and episode list
 async function getDetail(id) {
   try {
     const response = await fetch(`${baseUrl}/api/anime/${id}`, { headers });
@@ -50,12 +48,11 @@ async function getDetail(id) {
       }))
     };
   } catch (error) {
-    console.error("AnimaHD Detail Error:", error);
+    console.error("Jaber (AnimaHD) Detail Error:", error);
     return { episodes: [] };
   }
 }
 
-// Extract video streams
 async function getStreams(episodeId) {
   try {
     const response = await fetch(`${baseUrl}/api/watch/${episodeId}`, { headers });
@@ -72,7 +69,7 @@ async function getStreams(episodeId) {
       }
     }));
   } catch (error) {
-    console.error("AnimaHD Stream Error:", error);
+    console.error("Jaber (AnimaHD) Stream Error:", error);
     return [];
   }
-      }
+}
